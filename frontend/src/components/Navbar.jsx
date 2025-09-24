@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import localSession from "../utils/localSession";
 
 function Navbar({ setIsAuthenticated, isAuthenticated }) {
   const handleClick = () => {
     // remove user from storage
-    localStorage.removeItem("user");
+    localSession.removeItem("user");
     setIsAuthenticated(false);
   };
 

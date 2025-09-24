@@ -4,10 +4,11 @@ import SignupComponent from "./pages/SignupComponent";
 import LoginComponent from "./pages/LoginComponent";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import localSession from "./utils/localSession";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    JSON.parse(localStorage.getItem("user")) || false
+    localSession.getItem("user") ? true : false
   );
   return ( 
     <>

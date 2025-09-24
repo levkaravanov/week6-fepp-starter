@@ -1,4 +1,5 @@
 import { useState } from "react";
+import localSession from "../utils/localSession";
 
 export default function useLogin() {
     const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ export default function useLogin() {
 
             if (response.ok) {
                 const user = await response.json();
-                localStorage.setItem("user", JSON.stringify(user));
+                localSession.setItem("user", JSON.stringify(user));
                 console.log("User logged in successfully!");
                 return { ok: true, user: user };
             } else {

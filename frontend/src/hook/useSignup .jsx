@@ -1,4 +1,5 @@
 import React from "react";
+import localSession from "../utils/localSession";
 
 const useSignup = (setIsAuthenticated, navigate) => {
   const [email, setEmail] = React.useState("");
@@ -17,7 +18,7 @@ const useSignup = (setIsAuthenticated, navigate) => {
 
       if (response.ok) {
         const user = await response.json();
-        localStorage.setItem("user", JSON.stringify(user));
+        localSession.setItem("user", JSON.stringify(user));
         console.log("User signed up successfully!");
         setIsAuthenticated(true);
         navigate("/");
