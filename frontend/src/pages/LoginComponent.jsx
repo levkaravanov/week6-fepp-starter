@@ -1,32 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useLogin from "../hook/useLogin";
 
 const LoginComponent = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  const { login, loading, error } = useLogin(); // hook to handle login request
   const handleLogin = async () => {
-    try {
-      const response = await fetch("/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        const user = await response.json();
-        localStorage.setItem("user", JSON.stringify(user));
-        console.log("User logged in successfully!");
-        setIsAuthenticated(true);
-        navigate("/");
-      } else {
-        console.error("Login failed");
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
+    const result = await login(email, password);
+    if (result.ok) {
+      setIsAuthenticated(true);
+      navigate("/");
     }
   };
 
@@ -51,7 +36,10 @@ const LoginComponent = ({ setIsAuthenticated }) => {
         />
       </label>
       <br />
-      <button onClick={handleLogin}>Log In</button>
+      <button onClick={handleLogin} disabled={loading}>
+        {loading ? "Logging in..." : "Log In"}
+      </button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 };
