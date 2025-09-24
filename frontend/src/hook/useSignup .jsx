@@ -3,6 +3,7 @@ import React from "react";
 const useSignup = (setIsAuthenticated, navigate) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [cofirmPassword, setConfirmPassword] = React.useState("");
 
   const handleSignup = async () => {
     try {
@@ -28,7 +29,15 @@ const useSignup = (setIsAuthenticated, navigate) => {
     }
   };
 
-  return { email, setEmail, password, setPassword, handleSignup };
+  return {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    cofirmPassword,
+    setConfirmPassword,
+    handleSignup,
+  };
 };
 
 export default useSignup;

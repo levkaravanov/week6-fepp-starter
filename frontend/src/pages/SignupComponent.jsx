@@ -1,11 +1,24 @@
 import { useNavigate } from "react-router-dom";
-import useSignup from "../components/useSignup ";
+import useSignup from "../hook/useSignup ";
 
 const SignupComponent = ({ setIsAuthenticated }) => {
-  const { email, setEmail, password, setPassword, handleSignup } = useSignup(
-    setIsAuthenticated,
-    useNavigate()
-  );
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    cofirmPassword,
+    setConfirmPassword,
+    handleSignup,
+  } = useSignup(setIsAuthenticated, useNavigate());
+
+  const handleSignupWithCheck = () => {
+    if (password !== cofirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    handleSignup();
+  };
 
   return (
     <div className="form-container">
@@ -27,8 +40,16 @@ const SignupComponent = ({ setIsAuthenticated }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
+      <label>
+        Confirm Password:
+        <input
+          type="password"
+          value={cofirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+      </label>
       <br />
-      <button onClick={handleSignup}>Sign Up</button>
+      <button onClick={handleSignupWithCheck}>Sign Up</button>
     </div>
   );
 };
